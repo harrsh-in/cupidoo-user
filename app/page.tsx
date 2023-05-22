@@ -1,7 +1,13 @@
-import React from 'react';
+'use client';
+
+import { Button, Container } from '@mui/material';
 
 const Home = () => {
-    return <div>Home</div>;
+    return (
+        <Container>
+            <Button variant="outlined">Press me</Button>
+        </Container>
+    );
 };
 
 export default Home;

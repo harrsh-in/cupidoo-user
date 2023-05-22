@@ -1,6 +1,9 @@
+'use client';
+
 import { poppins } from '@/utils/fonts';
-import './globals.css';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
     title: 'Cupidoo | Connect. Discover. Love.',
@@ -22,6 +25,12 @@ export const metadata: Metadata = {
     viewport: 'width=device-width, initial-scale=1',
 };
 
+const theme = createTheme({
+    palette: {
+        mode: 'light',
+    },
+});
+
 export default function RootLayout({
     children,
 }: {
@@ -29,7 +38,11 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={poppins.className}>{children}</body>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+
+                <body className={poppins.className}>{children}</body>
+            </ThemeProvider>
         </html>
     );
 }
