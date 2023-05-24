@@ -17,8 +17,13 @@ import _ from 'lodash';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import schema, { schemaType } from './schema';
+import { setUserToken } from '../../utils/handleUserToken';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    let navigate = useNavigate();
+
     const {
         control,
         handleSubmit,
@@ -33,9 +38,9 @@ const SignIn = () => {
 
     const onSubmit: SubmitHandler<schemaType> = (data) => {
         console.log(data);
+        setUserToken('abc');
+        navigate('/dashboard');
     };
-
-    const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -82,6 +87,7 @@ const SignIn = () => {
                         <TextField
                             {...field}
                             required
+                            autoFocus
                             autoComplete="email"
                             label="Email"
                             variant="outlined"

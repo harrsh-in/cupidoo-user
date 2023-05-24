@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router';
 import SuspenseHOC from '../HOC/Suspense';
-import env from '../utils/env';
+import { getUserToken } from '../utils/handleUserToken';
 
 const PublicRouter = ({ children }: IProps) => {
-    const userToken = localStorage.getItem(env.userTokenKey);
+    const userToken = getUserToken();
 
     if (userToken) {
         return <Navigate to="/dashboard" replace />;
