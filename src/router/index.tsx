@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
+import Layout from '../HOC/Layout';
 import PrivateRouter from './PrivateRouter';
 import PublicRouter from './PublicRouter';
-import Layout from '../HOC/Layout';
 
 // Public routes
 const SignIn = lazy(() => import('../public/signin'));
