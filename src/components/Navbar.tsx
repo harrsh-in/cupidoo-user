@@ -1,11 +1,12 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { Fragment } from 'react';
+import Logo from '../assets/logo.png';
 
 const Navbar = () => {
     return (
         <Fragment>
             <Box className="navbar-container">
-                <Typography>Navbar</Typography>
+                <img src={Logo} alt="Cupidoo" className="logo" />
             </Box>
 
             <Box className="navbar-pad" />
