@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import PrivateRouter from './PrivateRouter';
 import PublicRouter from './PublicRouter';
+import Layout from '../HOC/Layout';
 
 // Public routes
 const SignIn = lazy(() => import('../public/signin'));
@@ -13,40 +14,45 @@ const Profile = lazy(() => import('../private/profile'));
 
 const router = createBrowserRouter([
     {
-        path: '/signin',
-        element: (
-            <PublicRouter>
-                <SignIn />
-            </PublicRouter>
-        ),
-    },
-    {
-        path: '/signup',
-        element: (
-            <PublicRouter>
-                <SignUp />
-            </PublicRouter>
-        ),
-    },
-    {
-        path: '/dashboard',
-        element: (
-            <PrivateRouter>
-                <Dashboard />
-            </PrivateRouter>
-        ),
-    },
-    {
-        path: '/profile',
-        element: (
-            <PrivateRouter>
-                <Profile />
-            </PrivateRouter>
-        ),
-    },
-    {
-        path: '*',
-        element: <Navigate to="/dashboard" replace />,
+        element: <Layout />,
+        children: [
+            {
+                path: '/signin',
+                element: (
+                    <PublicRouter>
+                        <SignIn />
+                    </PublicRouter>
+                ),
+            },
+            {
+                path: '/signup',
+                element: (
+                    <PublicRouter>
+                        <SignUp />
+                    </PublicRouter>
+                ),
+            },
+            {
+                path: '/dashboard',
+                element: (
+                    <PrivateRouter>
+                        <Dashboard />
+                    </PrivateRouter>
+                ),
+            },
+            {
+                path: '/profile',
+                element: (
+                    <PrivateRouter>
+                        <Profile />
+                    </PrivateRouter>
+                ),
+            },
+            {
+                path: '*',
+                element: <Navigate to="/dashboard" replace />,
+            },
+        ],
     },
 ]);
 
