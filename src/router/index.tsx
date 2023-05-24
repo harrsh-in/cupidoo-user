@@ -4,12 +4,12 @@ import PrivateRouter from './PrivateRouter';
 import PublicRouter from './PublicRouter';
 
 // Public routes
-const SignIn = lazy(() => import('../public/signin'));
-const SignUp = lazy(() => import('../public/signup'));
+const SignIn = lazy(() => delayForDemo(import('../public/signin')));
+const SignUp = lazy(() => delayForDemo(import('../public/signup')));
 
 // Private routes
-const Dashboard = lazy(() => import('../private/dashboard'));
-const Profile = lazy(() => import('../private/profile'));
+const Dashboard = lazy(() => delayForDemo(import('../private/dashboard')));
+const Profile = lazy(() => delayForDemo(import('../private/profile')));
 
 const router = createBrowserRouter([
     {
@@ -51,3 +51,10 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
+
+// Add a fixed delay so you can see the loading state
+async function delayForDemo(promise: any) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, 2000);
+    }).then(() => promise);
+}

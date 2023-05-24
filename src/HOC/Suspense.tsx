@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
+import PageLoader from '../components/PageLoader';
 
 const SuspenseHOC = ({ children }: IProps) => {
-    return <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>;
+    return <Suspense fallback={<PageLoader />}>{children}</Suspense>;
 };
 
 export default SuspenseHOC;
