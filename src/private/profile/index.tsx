@@ -1,5 +1,11 @@
+import { Box, Typography } from '@mui/material';
+
 const Profile = () => {
-    return <div>Profile</div>;
+    return (
+        <Box>
+            <Typography>Profile</Typography>
+        </Box>
+    );
 };
 
 export default Profile;

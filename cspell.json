@@ -3,7 +3,11 @@
     "ignorePaths": [],
     "dictionaryDefinitions": [],
     "dictionaries": [],
-    "words": ["cupidoo", "Parens"],
+    "words": [
+        "cupidoo",
+        "Noto",
+        "Parens"
+    ],
     "ignoreWords": [],
     "import": []
 }
