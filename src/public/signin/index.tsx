@@ -1,9 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {
     Box,
     Button,
     FormControl,
+    FormHelperText,
     IconButton,
     InputAdornment,
     InputLabel,
@@ -11,23 +13,25 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
+import _ from 'lodash';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-
-interface IFormInput {
-    email: string;
-    password: string;
-}
+import schema, { schemaType } from './schema';
 
 const SignIn = () => {
-    const { control, handleSubmit } = useForm({
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
         defaultValues: {
             email: '',
             password: '',
         },
+        resolver: zodResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    const onSubmit: SubmitHandler<schemaType> = (data) => {
         console.log(data);
     };
 
@@ -60,14 +64,14 @@ const SignIn = () => {
             </Typography>
 
             <Box
-                component="form"
                 noValidate
+                component="form"
                 autoComplete="off"
                 onSubmit={handleSubmit(onSubmit)}
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '1.2rem',
+                    gap: '1rem',
                     marginTop: '3rem',
                 }}
             >
@@ -77,10 +81,12 @@ const SignIn = () => {
                     render={({ field }) => (
                         <TextField
                             {...field}
+                            required
                             autoComplete="email"
                             label="Email"
                             variant="outlined"
-                            required
+                            error={Boolean(_.get(errors, 'email', ''))}
+                            helperText={_.get(errors, 'email.message', ' ')}
                         />
                     )}
                 />
@@ -89,7 +95,11 @@ const SignIn = () => {
                     name="password"
                     control={control}
                     render={({ field }) => (
-                        <FormControl variant="outlined" required>
+                        <FormControl
+                            required
+                            variant="outlined"
+                            error={Boolean(_.get(errors, 'password', ''))}
+                        >
                             <InputLabel htmlFor="outlined-adornment-password">
                                 Password
                             </InputLabel>
@@ -103,10 +113,10 @@ const SignIn = () => {
                                         <IconButton
                                             aria-label="toggle password visibility"
                                             onClick={handleClickShowPassword}
+                                            edge="end"
                                             onMouseDown={
                                                 handleMouseDownPassword
                                             }
-                                            edge="end"
                                         >
                                             {showPassword ? (
                                                 <VisibilityOff />
@@ -118,6 +128,9 @@ const SignIn = () => {
                                 }
                                 label="Password"
                             />
+                            <FormHelperText>
+                                {_.get(errors, 'password.message', ' ')}
+                            </FormHelperText>
                         </FormControl>
                     )}
                 />
