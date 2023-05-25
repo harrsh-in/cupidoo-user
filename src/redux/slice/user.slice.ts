@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { UserResponseType } from '../../types/user';
 
-const initialState = {
+export interface UserState {
+    details: UserResponseType | {};
+}
+
+const initialState: UserState = {
     details: {},
 };
 
