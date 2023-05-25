@@ -45,7 +45,6 @@ axiosInstance.interceptors.response.use(
         if (token != null && token !== '') {
             setUserToken(token);
         }
-        console.log(response.data);
 
         return response.data;
     },

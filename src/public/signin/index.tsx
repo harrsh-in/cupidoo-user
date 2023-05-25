@@ -13,18 +13,20 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import _ from 'lodash';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { SignInAPI } from '../../api/auth.api';
-import schema, { SignInFormSchemaType } from './schema';
-import notify from '../../utils/toast';
 import { useNavigate } from 'react-router-dom';
+import { SignInAPI } from '../../api/auth.api';
+import { GetUserProfileAPI } from '../../api/profile.api';
+import notify from '../../utils/toast';
+import schema, { SignInFormSchemaType } from './schema';
 
 const SignIn = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const [userSignInSuccess, setUserSignInSuccess] = useState(false);
 
     const {
         control,
@@ -38,10 +40,22 @@ const SignIn = () => {
         resolver: zodResolver(schema),
     });
 
+    const {
+        refetch: getUserProfileRefetch,
+        status,
+        isSuccess,
+        isFetched,
+    } = useQuery({
+        queryKey: [],
+        queryFn: GetUserProfileAPI,
+        enabled: false,
+    });
+
     const signInMutation = useMutation({
         mutationFn: SignInAPI,
         onSuccess: () => {
-            navigate('/dashboard');
+            getUserProfileRefetch();
+            setUserSignInSuccess(true);
         },
         onError(error) {
             notify(_.get(error, 'message', ''));
@@ -50,8 +64,6 @@ const SignIn = () => {
 
     const onSubmit: SubmitHandler<SignInFormSchemaType> = (data) => {
         signInMutation.mutate(data);
-        // setUserToken('abc');
-        // navigate('/dashboard');
     };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -61,6 +73,18 @@ const SignIn = () => {
     ) => {
         event.preventDefault();
     };
+
+    console.log({
+        status,
+        isSuccess,
+        isFetched,
+    });
+
+    useEffect(() => {
+        if (status === 'success' && userSignInSuccess) {
+            navigate('/dashboard');
+        }
+    }, [status, userSignInSuccess]);
 
     return (
         <Box
