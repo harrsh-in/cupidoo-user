@@ -12,7 +12,7 @@ const PageLoader = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#ffffff',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
             }}
         >
             <CircularProgress />
