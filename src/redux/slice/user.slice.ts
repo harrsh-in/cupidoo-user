@@ -13,16 +13,16 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setDetails: (state, action) => {
+        setUserDetails: (state, action) => {
             state.details = action.payload;
         },
 
-        resetDetails: (state) => {
+        resetUserDetails: (state) => {
             state.details = undefined;
         },
     },
 });
 
-export const { resetDetails, setDetails } = userSlice.actions;
+export const { resetUserDetails, setUserDetails } = userSlice.actions;
 
 export default userSlice.reducer;

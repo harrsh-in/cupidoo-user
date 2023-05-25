@@ -3,12 +3,16 @@ import { Fragment } from 'react';
 import Logo from '../assets/logo.png';
 import { removeUserToken } from '../utils/handleUserToken';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../redux/hooks';
+import { resetUserDetails } from '../redux/slice/user.slice';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const handleSignOut = () => {
         removeUserToken();
+        dispatch(resetUserDetails());
         navigate('/signin');
     };
 

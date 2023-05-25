@@ -22,9 +22,12 @@ import { SignInAPI } from '../../api/auth.api';
 import { GetUserProfileAPI } from '../../api/profile.api';
 import notify from '../../utils/toast';
 import schema, { SignInFormSchemaType } from './schema';
+import { useAppDispatch } from '../../redux/hooks';
+import { setUserDetails } from '../../redux/slice/user.slice';
 
 const SignIn = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const [showPassword, setShowPassword] = useState(false);
     const [userSignInSuccess, setUserSignInSuccess] = useState(false);
 
@@ -40,7 +43,11 @@ const SignIn = () => {
         resolver: zodResolver(schema),
     });
 
-    const { refetch: getUserProfileRefetch, status } = useQuery({
+    const {
+        refetch: getUserProfileRefetch,
+        status,
+        data: userProfileData,
+    } = useQuery({
         queryKey: [],
         queryFn: GetUserProfileAPI,
         enabled: false,
@@ -51,6 +58,7 @@ const SignIn = () => {
         onSuccess: () => {
             getUserProfileRefetch();
             setUserSignInSuccess(true);
+            // navigate('/dashboard');
         },
         onError(error) {
             notify(_.get(error, 'message', ''));
@@ -71,6 +79,7 @@ const SignIn = () => {
 
     useEffect(() => {
         if (status === 'success' && userSignInSuccess) {
+            dispatch(setUserDetails(_.get(userProfileData, 'user', undefined)));
             navigate('/dashboard');
         }
     }, [status, userSignInSuccess]);
