@@ -10,6 +10,7 @@ const getOsEnv = (key: string) => {
 
 const env = {
     userTokenKey: getOsEnv('VITE_USER_TOKEN_KEY'),
+    serverUrl: getOsEnv('VITE_SERVER_URL'),
 };
 
 export default env;

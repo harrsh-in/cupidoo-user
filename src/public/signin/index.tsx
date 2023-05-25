@@ -13,16 +13,18 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import _ from 'lodash';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import schema, { schemaType } from './schema';
-import { setUserToken } from '../../utils/handleUserToken';
+import { SignInAPI } from '../../api/auth.api';
+import schema, { SignInFormSchemaType } from './schema';
+import notify from '../../utils/toast';
 import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    let navigate = useNavigate();
 
     const {
         control,
@@ -36,10 +38,20 @@ const SignIn = () => {
         resolver: zodResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<schemaType> = (data) => {
-        console.log(data);
-        setUserToken('abc');
-        navigate('/dashboard');
+    const signInMutation = useMutation({
+        mutationFn: SignInAPI,
+        onSuccess: () => {
+            navigate('/dashboard');
+        },
+        onError(error) {
+            notify(_.get(error, 'message', ''));
+        },
+    });
+
+    const onSubmit: SubmitHandler<SignInFormSchemaType> = (data) => {
+        signInMutation.mutate(data);
+        // setUserToken('abc');
+        // navigate('/dashboard');
     };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);

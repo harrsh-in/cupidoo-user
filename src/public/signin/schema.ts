@@ -18,4 +18,4 @@ const schema = z.object({
 
 export default schema;
 
-export type schemaType = z.infer<typeof schema>;
+export type SignInFormSchemaType = z.infer<typeof schema>;
