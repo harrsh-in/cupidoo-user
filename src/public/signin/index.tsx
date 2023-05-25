@@ -40,12 +40,7 @@ const SignIn = () => {
         resolver: zodResolver(schema),
     });
 
-    const {
-        refetch: getUserProfileRefetch,
-        status,
-        isSuccess,
-        isFetched,
-    } = useQuery({
+    const { refetch: getUserProfileRefetch, status } = useQuery({
         queryKey: [],
         queryFn: GetUserProfileAPI,
         enabled: false,
@@ -73,12 +68,6 @@ const SignIn = () => {
     ) => {
         event.preventDefault();
     };
-
-    console.log({
-        status,
-        isSuccess,
-        isFetched,
-    });
 
     useEffect(() => {
         if (status === 'success' && userSignInSuccess) {

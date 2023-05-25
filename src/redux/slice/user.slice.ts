@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { UserResponseType } from '../../types/user';
 
 export interface UserState {
-    details: UserResponseType | {};
+    details: UserResponseType | undefined;
 }
 
 const initialState: UserState = {
-    details: {},
+    details: undefined,
 };
 
 export const userSlice = createSlice({
@@ -18,7 +18,7 @@ export const userSlice = createSlice({
         },
 
         resetDetails: (state) => {
-            state.details = {};
+            state.details = undefined;
         },
     },
 });
