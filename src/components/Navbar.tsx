@@ -18,7 +18,7 @@ const Navbar = () => {
 
     return (
         <Fragment>
-            <Box className="navbar-container">
+            <Box className="navbar-container" component="nav">
                 <img src={Logo} alt="Cupidoo" className="logo" />
 
                 <Box>
