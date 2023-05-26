@@ -71,8 +71,6 @@ const Step1 = () => {
     const handleAddressChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        console.log(e.target.value === '\n');
-
         if (e.target.value !== '\n') {
             setAddress((prev) => {
                 return {
