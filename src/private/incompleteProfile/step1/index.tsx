@@ -15,6 +15,7 @@ import {
     GetStatesAPI,
 } from '../../../api/common.api';
 import PageLoader from '../../../components/PageLoader';
+import { verifyPinCode } from '../../../utils';
 
 const Step1 = () => {
     const [country, setCountry] = useState<ICountry | null>(null);
@@ -92,7 +93,8 @@ const Step1 = () => {
         });
     };
 
-    const handleSubmitForm = async () => {
+    const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         setErrorMessages({
             country: '',
             state: '',
@@ -141,6 +143,15 @@ const Step1 = () => {
                 return {
                     ...prev,
                     pinCode: 'Please enter pin-code.',
+                };
+            });
+            return;
+        }
+        if (!verifyPinCode(address.pinCode)) {
+            setErrorMessages((prev) => {
+                return {
+                    ...prev,
+                    pinCode: 'Please enter a valid pin-code.',
                 };
             });
             return;
@@ -201,6 +212,20 @@ const Step1 = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '1rem',
+                }}
+                noValidate
+                component="form"
+                autoComplete="off"
+                onSubmit={(e) => {
+                    if (
+                        country &&
+                        state &&
+                        city &&
+                        address.address &&
+                        address.pinCode
+                    ) {
+                        handleSubmitForm(e);
+                    }
                 }}
             >
                 <Box
@@ -420,7 +445,7 @@ const Step1 = () => {
 
                 <Button
                     variant="outlined"
-                    onClick={handleSubmitForm}
+                    type="submit"
                     sx={{
                         display:
                             country &&
