@@ -14,6 +14,9 @@ const Profile = lazy(() => import('../private/profile'));
 const ProfileSetUpOne = lazy(
     () => import('../private/incompleteProfile/step1')
 );
+const ProfileSetUpTwo = lazy(
+    () => import('../private/incompleteProfile/step2')
+);
 
 const router = createBrowserRouter([
     {
@@ -56,6 +59,14 @@ const router = createBrowserRouter([
                 element: (
                     <PrivateRouter>
                         <ProfileSetUpOne />
+                    </PrivateRouter>
+                ),
+            },
+            {
+                path: '/profile/setup-2',
+                element: (
+                    <PrivateRouter>
+                        <ProfileSetUpTwo />
                     </PrivateRouter>
                 ),
             },

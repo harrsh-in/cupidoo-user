@@ -6,7 +6,7 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import {
@@ -16,8 +16,16 @@ import {
 } from '../../../api/common.api';
 import PageLoader from '../../../components/PageLoader';
 import { verifyPinCode } from '../../../utils';
+import { CompleteStepOneProfileAPI } from '../../../api/profile.api';
+import notify from '../../../utils/toast';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../redux/hooks';
+import { updateProfileSetupStep } from '../../../redux/slice/user.slice';
 
 const Step1 = () => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
     const [country, setCountry] = useState<ICountry | null>(null);
     const [state, setState] = useState<IState | null>(null);
     const [city, setCity] = useState<ICity | null>(null);
@@ -67,6 +75,17 @@ const Step1 = () => {
         queryFn: async () => (state ? GetCitiesAPI(state.id) : null),
         keepPreviousData: true,
         enabled: Boolean(state),
+    });
+
+    const completeStepOneProfileMutation = useMutation({
+        mutationFn: CompleteStepOneProfileAPI,
+        onSuccess: () => {
+            dispatch(updateProfileSetupStep(1));
+            navigate('/profile/setup-2');
+        },
+        onError(error) {
+            notify(_.get(error, 'message', ''));
+        },
     });
 
     const handleAddressChange = (
@@ -161,7 +180,7 @@ const Step1 = () => {
         const stateId = state.id;
         const cityId = city.id;
 
-        console.log({
+        completeStepOneProfileMutation.mutate({
             ...address,
             countryId,
             stateId,

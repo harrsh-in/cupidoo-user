@@ -20,9 +20,16 @@ export const userSlice = createSlice({
         resetUserDetails: (state) => {
             state.details = undefined;
         },
+
+        updateProfileSetupStep: (state, action) => {
+            if (state.details && state.details.details) {
+                state.details.details.profileSetupStep = action.payload;
+            }
+        },
     },
 });
 
-export const { resetUserDetails, setUserDetails } = userSlice.actions;
+export const { resetUserDetails, setUserDetails, updateProfileSetupStep } =
+    userSlice.actions;
 
 export default userSlice.reducer;

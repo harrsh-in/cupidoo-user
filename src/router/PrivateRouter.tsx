@@ -13,13 +13,18 @@ const PrivateRouter = ({ children }: IProps) => {
         return <Navigate to="/signin" replace />;
     }
 
-    if (
-        details &&
-        details.details &&
-        details.details.profileSetupStep === 0 &&
-        pathname !== '/profile/setup-1'
-    ) {
-        return <Navigate to="/profile/setup-1" replace />;
+    if (details && details.details) {
+        if (
+            details.details.profileSetupStep === 0 &&
+            pathname !== '/profile/setup-1'
+        ) {
+            return <Navigate to="/profile/setup-1" replace />;
+        } else if (
+            details.details.profileSetupStep === 1 &&
+            pathname !== '/profile/setup-2'
+        ) {
+            return <Navigate to="/profile/setup-2" replace />;
+        }
     }
 
     return <SuspenseHOC>{children}</SuspenseHOC>;
