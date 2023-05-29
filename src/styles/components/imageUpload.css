@@ -1,0 +1,20 @@
+.image-upload-edit-container {
+    cursor: pointer;
+}
+
+.image-upload-edit-icon-container {
+    opacity: 0;
+    transition: opacity ease 300ms;
+}
+
+.image-upload-edit-container:hover > .image-upload-edit-icon-container {
+    opacity: 1;
+}
+
+.image-upload-person-container {
+    transition: opacity ease 300ms;
+}
+
+.image-upload-edit-container:hover > .image-upload-person-container {
+    opacity: 0.3;
+}
