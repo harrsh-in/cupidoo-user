@@ -11,12 +11,6 @@ const SignUp = lazy(() => import('../public/signup'));
 // Private routes
 const Dashboard = lazy(() => import('../private/dashboard'));
 const Profile = lazy(() => import('../private/profile'));
-const ProfileSetUpOne = lazy(
-    () => import('../private/incompleteProfile/step1')
-);
-const ProfileSetUpTwo = lazy(
-    () => import('../private/incompleteProfile/step2')
-);
 
 const router = createBrowserRouter([
     {
@@ -54,22 +48,7 @@ const router = createBrowserRouter([
                     </PrivateRouter>
                 ),
             },
-            {
-                path: '/profile/setup-1',
-                element: (
-                    <PrivateRouter>
-                        <ProfileSetUpOne />
-                    </PrivateRouter>
-                ),
-            },
-            {
-                path: '/profile/setup-2',
-                element: (
-                    <PrivateRouter>
-                        <ProfileSetUpTwo />
-                    </PrivateRouter>
-                ),
-            },
+
             {
                 path: '*',
                 element: <Navigate to="/dashboard" replace />,

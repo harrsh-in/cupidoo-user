@@ -1,6 +1,5 @@
 @import url('./navbar.css');
 @import url('./private/dashboard.css');
-@import url('./components/imageUpload.css');
 
 :root {
     font-family: 'Inter', sans-serif;
