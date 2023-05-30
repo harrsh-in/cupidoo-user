@@ -27,7 +27,8 @@ const OtherDetails = () => {
             autoComplete="off"
             onSubmit={handleSubmit(onSubmit)}
             sx={{
-                width: '50%',
+                maxWidth: '330px',
+                marginX: 'auto',
             }}
         >
             <TextField
@@ -101,7 +102,7 @@ const OtherDetails = () => {
                 variant="outlined"
                 fullWidth
                 sx={{
-                    marginTop: '8px',
+                    marginTop: '1.5rem',
                 }}
             >
                 Save

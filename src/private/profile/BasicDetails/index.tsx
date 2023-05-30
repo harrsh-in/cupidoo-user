@@ -1,20 +1,24 @@
-import { Box } from '@mui/material';
-import ProfilePhoto from './ProfilePhoto';
+import { Paper } from '@mui/material';
 import OtherDetails from './OtherDetails';
+import ProfilePhoto from './ProfilePhoto';
 
 const BasicDetails = () => {
     return (
-        <Box
+        <Paper
+            elevation={1}
             sx={{
                 display: 'flex',
-                width: '70%',
+                flexDirection: 'column',
                 marginX: 'auto',
+                gap: '2rem',
+                padding: '3rem 1rem',
             }}
+            className="basic-details-container"
         >
             <ProfilePhoto />
 
             <OtherDetails />
-        </Box>
+        </Paper>
     );
 };
 

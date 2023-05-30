@@ -10,6 +10,7 @@ import theme from './utils/theme.ts';
 
 // External CSS
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-image-crop/dist/ReactCrop.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <ThemeProvider theme={theme}>

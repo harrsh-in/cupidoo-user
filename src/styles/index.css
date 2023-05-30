@@ -24,3 +24,21 @@ body {
 body::-webkit-scrollbar {
     display: none;
 }
+
+.modal-container {
+    width: 400px;
+}
+
+.basic-details-container {
+    width: 50%;
+}
+
+@media screen and (max-width: 426px) {
+    .basic-details-container {
+        width: 100%;
+    }
+
+    .modal-container {
+        width: 90%;
+    }
+}
