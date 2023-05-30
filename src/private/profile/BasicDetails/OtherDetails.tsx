@@ -27,7 +27,7 @@ const OtherDetails = () => {
             autoComplete="off"
             onSubmit={handleSubmit(onSubmit)}
             sx={{
-                width: '60%',
+                width: '50%',
             }}
         >
             <TextField

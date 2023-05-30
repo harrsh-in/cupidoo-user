@@ -7,7 +7,7 @@ const BasicDetails = () => {
         <Box
             sx={{
                 display: 'flex',
-                width: '60%',
+                width: '70%',
                 marginX: 'auto',
             }}
         >
