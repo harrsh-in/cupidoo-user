@@ -11,7 +11,15 @@ import { useAppSelector } from '../../../redux/hooks';
 const OtherDetails = () => {
     const { details } = useAppSelector((state) => state.user);
 
-    const [dob, setDob] = useState<Dayjs | null>(dayjs('2022-04-17'));
+    const maximumDate = dayjs().subtract(18, 'years');
+
+    const [dob, setDob] = useState<{
+        value: Dayjs | null;
+        error: string;
+    }>({
+        value: maximumDate,
+        error: '',
+    });
 
     const {
         control,
@@ -30,6 +38,15 @@ const OtherDetails = () => {
     });
 
     const onSubmit: SubmitHandler<SignInFormSchemaType> = (data) => {
+        if (!dayjs(dob.value).isValid()) {
+            setDob((prev) => {
+                return {
+                    ...prev,
+                    error: 'Invalid date',
+                };
+            });
+            return;
+        }
         console.log(data);
     };
 
@@ -39,7 +56,7 @@ const OtherDetails = () => {
             setValue('username', details.username);
             setValue('email', details.email);
             setValue('contactNumber', details.contactNumber);
-            setValue('dob', dayjs(dob).format('DD-MM-YYYY'));
+            setValue('dob', dayjs(dob.value).format('DD-MM-YYYY'));
         }
     }, [details]);
 
@@ -153,11 +170,39 @@ const OtherDetails = () => {
             />
 
             <DatePicker
+                closeOnSelect
+                displayWeekNumber
+                showDaysOutsideCurrentMonth
+                format="DD/MM/YYYY"
                 label="Date of birth"
-                value={dob}
+                value={dob.value}
+                defaultValue={dob.value}
+                maxDate={maximumDate}
                 onChange={(newValue) => {
-                    setDob(newValue);
-                    setValue('dob', dayjs(newValue).format('DD-MM-YYYY'));
+                    setDob((prev) => {
+                        return {
+                            ...prev,
+                            error: '',
+                            value:
+                                dayjs(newValue).diff(maximumDate, 'days') > 0
+                                    ? maximumDate
+                                    : newValue,
+                        };
+                    });
+                    setValue(
+                        'dob',
+                        dayjs(
+                            dayjs(newValue).diff(maximumDate, 'days') > 0
+                                ? maximumDate
+                                : newValue
+                        ).format('DD-MM-YYYY')
+                    );
+                }}
+                slotProps={{
+                    textField: {
+                        helperText: dob.error,
+                        error: Boolean(dob.error),
+                    },
                 }}
                 sx={{
                     marginTop: '8px',
